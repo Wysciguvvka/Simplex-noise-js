@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <link rel="preconnect">
-
+    <link rel='shortcut icon' type='image/x-icon' href='/favicon.ico' />
     <title>Simplex noise</title>
     <style>
         body {
@@ -49,15 +49,15 @@
         controls.panSpeed = 0.25;
 
         // geometry
-        const geometry = new THREE.PlaneBufferGeometry(32,32,128,128);
+        const geometry = new THREE.PlaneBufferGeometry(32, 32, 128, 128);
         const material = new THREE.PointsMaterial({ color: 0xffaaff, side: THREE.DoubleSide });
-        const wireframe = new THREE.WireframeGeometry( geometry );
-        const line = new THREE.LineSegments( wireframe );
+        const wireframe = new THREE.WireframeGeometry(geometry);
+        const line = new THREE.LineSegments(wireframe);
         line.material.depthTest = false;
         line.material.opacity = 0.25;
         line.material.transparent = true;
         line.rotation.x = -Math.PI / 2;
-        scene.add( line );
+        scene.add(line);
 
         const vertices = new Float32Array([
             -1.0, -1.0, 1.0,
@@ -71,7 +71,7 @@
         // geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
         const plane = new THREE.Mesh(geometry, material);
 
-        
+
         plane.rotation.x = -Math.PI / 2;
         scene.add(plane);
 
