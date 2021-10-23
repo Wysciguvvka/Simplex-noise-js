@@ -1,3 +1,3 @@
 # Three.js Simplex noise
-Controls: Mouse
+Controls: Mouse\
 https://wysciguvvka.github.io/Simplex-noise-js/
