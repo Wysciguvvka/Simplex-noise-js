@@ -27,7 +27,7 @@
         // scene
         const scene = new THREE.Scene();
         scene.backround = new THREE.Color(0xf8f8ff)
-        scene.fog = new THREE.FogExp2(0xce4993, 0.00014)
+        // scene.fog = new THREE.FogExp2(0xce4993, 0.00014)
 
         // camera
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -52,7 +52,7 @@
         const geometry = new THREE.PlaneBufferGeometry(32, 32, 128, 128);
         const material = new THREE.PointsMaterial({ color: 0xffaaff, side: THREE.DoubleSide });
         const wireframe = new THREE.WireframeGeometry(geometry);
-        const line = new THREE.LineSegments(wireframe);
+        const line = new THREE.LineSegments(geometry);
         line.material.depthTest = false;
         line.material.opacity = 0.25;
         line.material.transparent = true;
@@ -82,7 +82,16 @@
         camera.position.y = 15;
         controls.update()
 
+        const count = geometry.attributes.position.count;
+
         function animate() {
+            let time = Date.now() * 0.002;
+            for (let i = 0; i < count; i++) {
+                let x = geometry.attributes.position.getX(i);
+                geometry.attributes.position.setZ(i, Math.cos(x + time));
+            }
+            geometry.computeVertexNormals();
+            geometry.attributes.position.needsUpdate = true;
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
             // console.log(camera.position.x,camera.position.z, camera.position.y);
