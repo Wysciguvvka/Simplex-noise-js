@@ -49,8 +49,16 @@
         controls.panSpeed = 0.25;
 
         // geometry
-        const geometry = new THREE.BufferGeometry();
+        const geometry = new THREE.PlaneBufferGeometry(32,32,128,128);
         const material = new THREE.PointsMaterial({ color: 0xffaaff, side: THREE.DoubleSide });
+        const wireframe = new THREE.WireframeGeometry( geometry );
+        const line = new THREE.LineSegments( wireframe );
+        line.material.depthTest = false;
+        line.material.opacity = 0.25;
+        line.material.transparent = true;
+        line.rotation.x = -Math.PI / 2;
+        scene.add( line );
+
         const vertices = new Float32Array([
             -1.0, -1.0, 1.0,
             1.0, -1.0, 1.0,
@@ -60,18 +68,24 @@
             -1.0, 1.0, 1.0,
             -1.0, -1.0, 1.0
         ]);
-        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+        // geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
         const plane = new THREE.Mesh(geometry, material);
+
+        
+        plane.rotation.x = -Math.PI / 2;
         scene.add(plane);
 
 
 
-        camera.position.z = 5;
+        camera.position.x = 9;
+        camera.position.z = 26;
+        camera.position.y = 15;
         controls.update()
 
         function animate() {
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
+            // console.log(camera.position.x,camera.position.z, camera.position.y);
         }
         animate();
         window.addEventListener('resize', onWindowResize, false);
