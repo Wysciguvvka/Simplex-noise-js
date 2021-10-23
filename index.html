@@ -50,7 +50,7 @@
 
         // geometry
         const geometry = new THREE.BufferGeometry();
-        const material = new THREE.PointsMaterial({ color: 0xffaaff });
+        const material = new THREE.PointsMaterial({ color: 0xffaaff, side: THREE.DoubleSide });
         const vertices = new Float32Array([
             -1.0, -1.0, 1.0,
             1.0, -1.0, 1.0,
@@ -60,7 +60,7 @@
             -1.0, 1.0, 1.0,
             -1.0, -1.0, 1.0
         ]);
-        geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
+        geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
         const cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
 
