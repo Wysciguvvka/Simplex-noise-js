@@ -61,8 +61,8 @@
             -1.0, -1.0, 1.0
         ]);
         geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-        const cube = new THREE.Mesh(geometry, material);
-        scene.add(cube);
+        const plane = new THREE.Mesh(geometry, material);
+        scene.add(plane);
 
 
 
@@ -71,8 +71,6 @@
 
         function animate() {
             requestAnimationFrame(animate);
-            // cube.rotation.x += 0.01;
-            // cube.rotation.y += 0.01;
             renderer.render(scene, camera);
         }
         animate();
