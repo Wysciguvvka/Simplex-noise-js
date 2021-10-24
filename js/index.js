@@ -23,9 +23,51 @@ controls.rotateSpeed = 0.25;
 controls.panSpeed = 0.25;
 
 // geometry
-const geometry = new THREE.PlaneBufferGeometry(32, 32, 128, 128);
-const material = new THREE.PointsMaterial({ color: 0xffaaff, side: THREE.DoubleSide });
-const wireframe_mat = new THREE.MeshBasicMaterial( { color: 0x4a3d49 } );
+/*const particles = 500000;
+                const geometry = new THREE.BufferGeometry();
+                const positions = [];
+                const colors = [];
+                const color = new THREE.Color();
+
+                const n = 1000, n2 = n / 2; // particles spread in the cube
+
+                for ( let i = 0; i < particles; i ++ ) {
+
+                    // positions
+
+                    const x = Math.random() * n - n2;
+                    const y = Math.random() * n - n2;
+                    const z = Math.random() * n - n2;
+
+                    positions.push( x, y, z );
+
+                    // colors
+
+                    const vx = ( x / n ) + 0.5;
+                    const vy = ( y / n ) + 0.5;
+                    const vz = ( z / n ) + 0.5;
+
+                    color.setRGB( vx, vy, vz );
+
+                    colors.push( color.r, color.g, color.b );
+
+                }
+
+                geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( positions, 3 ) );
+                geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
+
+                geometry.computeBoundingSphere();
+
+                //
+
+                const material = new THREE.PointsMaterial( { size: 15, vertexColors: true } );
+
+                points = new THREE.Points( geometry, material );
+                scene.add( points );
+*/
+const geometry = new THREE.PlaneBufferGeometry(32, 32, 64, 64);
+const material = new THREE.PointsMaterial({ color: 0xffaaff, side: THREE.DoubleSide, size: 0.3, vertexColor: true });
+const wireframe_mat = new THREE.MeshBasicMaterial({ color: 0x4a3d49 });
 const wireframe = new THREE.WireframeGeometry(geometry);
 const line = new THREE.LineSegments(geometry, wireframe_mat);
 line.material.depthTest = false;
@@ -34,17 +76,12 @@ line.material.transparent = true;
 line.rotation.x = -Math.PI / 2;
 scene.add(line);
 
-const vertices = new Float32Array([
-    -1.0, -1.0, 1.0,
-    1.0, -1.0, 1.0,
-    1.0, 1.0, 1.0,
+// particles
+const particles = 16384;
+const vertices = [];
 
-    1.0, 1.0, 1.0,
-    -1.0, 1.0, 1.0,
-    -1.0, -1.0, 1.0
-]);
 // geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-const plane = new THREE.Mesh(geometry, material);
+const plane = new THREE.Points(geometry, material);
 
 
 plane.rotation.x = -Math.PI / 2;
