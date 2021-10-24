@@ -1,3 +1,4 @@
+import {} from './classic-perlin.js';
 // scene
 const scene = new THREE.Scene();
 scene.backround = new THREE.Color(0xf8f8ff)
@@ -24,7 +25,7 @@ controls.panSpeed = 0.25;
 
 // geometry
 const geometry = new THREE.PlaneBufferGeometry(32, 32, 64, 64);
-const material = new THREE.PointsMaterial({ color: 0xffaaff, side: THREE.DoubleSide, size: 0.3});
+const material = new THREE.PointsMaterial({ color: 0xffaaff, side: THREE.DoubleSide, size: 0.3 });
 const wireframe_mat = new THREE.MeshBasicMaterial({ color: 0x4a3d49 });
 const wireframe = new THREE.WireframeGeometry(geometry);
 const line = new THREE.LineSegments(geometry, wireframe_mat);
@@ -66,6 +67,10 @@ camera.position.y = 15;
 controls.update()
 
 const count = geometry.attributes.position.count;
+function unit_vector() {
+    let angle = 2 * Math.random() * Math.PI;
+    return Math.cos(angle);
+}
 
 function animate() {
 
@@ -73,27 +78,22 @@ function animate() {
     for (let i = 0; i < count; i++) {
         let x = geometry.attributes.position.getX(i);
         geometry.attributes.position.setZ(i, Math.cos(x + time));
+        //geometry.attributes.position.setZ(i, 1);
     }
-    // geometry.computeVertexNormals();
+    geometry.computeVertexNormals();
     geometry.attributes.position.needsUpdate = true;
     let points = plane.geometry.attributes.position.array;
     for (let i = 0; i < points.length; i += 3) {
         cube[i].position.x = points[i]; // l/r
         cube[i].position.z = points[i + 1]; // f/b
         cube[i].position.y = points[i + 2]; // t/b
-        let vx = 0.5*Math.sin(points[i+2]*0.6)+0.5
+        let vx = 0.5 * Math.sin(points[i + 2] * 0.6) + 0.5
         let vy = 0;
         let vz = 1;
-        /*
-        // low performance
-        var cloned = cube[i].material.clone()
-        cube[i].material = cloned;
-        */
-        cube[i].material.color.setRGB(vx,vy,vz);
+        cube[i].material.color.setRGB(vx, vy, vz);
     }
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
-    // console.log(camera.position.x,camera.position.z, camera.position.y);
 }
 animate();
 window.addEventListener('resize', onWindowResize, false);
