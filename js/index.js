@@ -1,4 +1,4 @@
-import {} from './classic-perlin.js';
+// import {} from './classic-perlin.js';
 // scene
 const scene = new THREE.Scene();
 scene.backround = new THREE.Color(0xf8f8ff)
