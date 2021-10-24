@@ -74,7 +74,7 @@ line.material.depthTest = false;
 line.material.opacity = 0.25;
 line.material.transparent = true;
 line.rotation.x = -Math.PI / 2;
-scene.add(line);
+// scene.add(line);
 
 // particles
 const particles = 16384;
@@ -85,7 +85,22 @@ const plane = new THREE.Points(geometry, material);
 
 
 plane.rotation.x = -Math.PI / 2;
-scene.add(plane);
+// scene.add(plane);
+
+let points = plane.geometry.attributes.position.array;
+console.log(points)
+const cubeGeometry = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+const cube = []
+
+for (let i = 0; i < points.length; i += 3) {
+    cube[i] = new THREE.Mesh(cubeGeometry, cubeMaterial);
+    cube[i].position.x = points[i];
+    cube[i].position.z = points[i+1];
+    cube[i].position.y = points[i+2];
+    scene.add(cube[i]);
+}
+console.log(points[0])
 
 camera.position.x = 9;
 camera.position.z = 26;
@@ -96,12 +111,19 @@ const count = geometry.attributes.position.count;
 
 function animate() {
     let time = Date.now() * 0.002;
+    
     for (let i = 0; i < count; i++) {
         let x = geometry.attributes.position.getX(i);
         geometry.attributes.position.setZ(i, Math.cos(x + time));
     }
     geometry.computeVertexNormals();
     geometry.attributes.position.needsUpdate = true;
+    let points = plane.geometry.attributes.position.array;
+    for (let i = 0; i < points.length; i+=3) {
+        cube[i].position.x = points[i];
+        cube[i].position.z = points[i+1];
+        cube[i].position.y = points[i+2];
+    }
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
     // console.log(camera.position.x,camera.position.z, camera.position.y);
