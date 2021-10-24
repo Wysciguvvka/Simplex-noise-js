@@ -85,7 +85,7 @@ function animate() {
         let vy = 0;
         let vz = 1;
         /*
-        // 5fps
+        // low performance
         var cloned = cube[i].material.clone()
         cube[i].material = cloned;
         */
