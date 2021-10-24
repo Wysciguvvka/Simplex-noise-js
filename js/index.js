@@ -81,9 +81,9 @@ function animate() {
         cube[i].position.x = points[i]; // l/r
         cube[i].position.z = points[i + 1]; // f/b
         cube[i].position.y = points[i + 2]; // t/b
-        let vx = points[i+2];
+        let vx = 0.5*Math.sin(points[i+2]*0.6)+0.5
         let vy = 0;
-        let vz = 0;
+        let vz = 1;
         /*
         // 5fps
         var cloned = cube[i].material.clone()
